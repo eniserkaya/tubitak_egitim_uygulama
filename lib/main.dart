@@ -11,7 +11,10 @@ class EgitimUygulamasi extends StatelessWidget {
     return MaterialApp(
       title:'Tübitak Eğitim',
       onGenerateRoute: TubitakRouter.generateRoute,
-      initialRoute: HomeScreenRoute,
+      initialRoute: LoginScreenRoute,
+      theme: ThemeData(
+        primaryColor: Colors.grey[900]
+      ),
     );
   }
 }

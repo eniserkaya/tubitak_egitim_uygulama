@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import '../remoting/dio_client.dart';
+import 'package:tubitak_egitim_uygulama/util/routing_constants.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -186,7 +189,18 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _formSubmit() {
-    //HTTP ISTEGI YAPILACAK
+  _formSubmit() async {
+    var formData =
+        FormData.fromMap({'kullaniciAdi': kullaniciAdi, 'parola': parola});
+    final DioClient dioClient = DioClient();
+    var girisYapmaSonucu = await dioClient.girisYapmaIstegiGonder(formData);
+    if (girisYapmaSonucu!) {
+      Navigator.pushReplacementNamed(context, HomeScreenRoute);
+    } else {
+      SnackBar snackBar = SnackBar(
+          content: Text('Bilgiler hatalı. Kontrol ediniz.'),
+          duration: Duration(seconds: 2));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

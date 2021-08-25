@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:tubitak_egitim_uygulama/models/kullanici.dart';
 
 class DioClient {
   final Dio _dio = Dio(BaseOptions(
@@ -25,5 +26,15 @@ class DioClient {
     }
 
     return girisYaptiMi;
+  }
+
+  Future<Kullanici?> gezilenYerleriGetir() async {
+    try {
+      Response response = await _dio.get('/json_parser.php');
+      var jsonResult = json.decode(response.data);
+      return Kullanici.fromJson(jsonResult);
+    } catch (e) {
+      print('Error gezilen yerler: $e');
+    }
   }
 }

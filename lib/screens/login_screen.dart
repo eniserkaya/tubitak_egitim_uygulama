@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tubitak_egitim_uygulama/util/storage_util.dart';
 import '../remoting/dio_client.dart';
 import 'package:tubitak_egitim_uygulama/util/routing_constants.dart';
 
@@ -195,6 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final DioClient dioClient = DioClient();
     var girisYapmaSonucu = await dioClient.girisYapmaIstegiGonder(formData);
     if (girisYapmaSonucu!) {
+      StorageUtil.putBool("kullaniciGirisYaptiMi", true);
       Navigator.pushReplacementNamed(context, HomeScreenRoute);
     } else {
       SnackBar snackBar = SnackBar(
